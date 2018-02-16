@@ -1,3 +1,4 @@
+//** function not used **/
 findLongestCommonSubstring = function(a,b) {
   var longest = "";
   // loop through the first string
@@ -64,30 +65,27 @@ interlap = function(a,b) {
   return false;
 };
 
-
-var r = findLongestCommonSubstring("eneergy","menee");
-print(r);
-
-print(interlap("eneegoooolgl","meneegoooolgl"));
-print(interlap("eneeg3oo4lgl","meneegoooolgl"));
-
 var i=0;
 var names = [];
 
 db["datasets.dataset"].find({}).sort({name:1}).forEach(function(d){
    names.push({name:d.name, accession: d.accession, database: d.database});
-});
+})
  
 for(var j=0; j!=names.length; j++ ){
  i = i +1;
  print(i);
 
  for(var k=j+1; k!=names.length; k++){
+ if(names[j].database == names[k].database)
+	continue;
+	
+
  if(interlap(names[j].name,names[k].name)){
     print(names[j].database, names[j].accession, names[j].name);
     print(names[k].database, names[k].accession, names[k].name);
 
-   db.mergeCandidates.insertOne({database:names[j].database,accession:names[j].accession,database1:names[k].database,accession1:names[k].accession });
+    db.mergeCandidates.insertOne({database:names[j].database,accession:names[j].accession,database1:names[k].database,accession1:names[k].accession });
    }
  }
 
